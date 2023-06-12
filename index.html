@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Temperature Converter</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin: 0 0 20px 0;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+
+        .btn-convert {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-convert:hover {
+            background-color: #145a18;
+        }
+
+        .result {
+            padding: 20px;
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+            background-color: #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 5px;
+            }
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.6;
+            background-size: cover;   
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <img class="background-image" src="image/pexels-pixabay-139398.jpg" alt="">
+    <div class="container">
+        <h1>Temperature Converter</h1>
+        <div class="input-group">
+            <label for="temperatureInput">Temperature:</label>
+            <input type="number" id="temperatureInput" placeholder="Enter temperature">
+        </div>
+        <div class="input-group">
+            <label for="fromUnit">From:</label>
+            <select id="fromUnit">
+                <option value="celsius">Celsius</option>
+                <option value="fahrenheit">Fahrenheit</option>
+                <option value="kelvin">Kelvin</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="toUnit">To:</label>
+            <select id="toUnit">
+                <option value="celsius">Celsius</option>
+                <option value="fahrenheit">Fahrenheit</option>
+                <option value="kelvin">Kelvin</option>
+            </select>
+        </div>
+        <button class="btn-convert" onclick="convertTemperature()">Convert</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function convertTemperature() {
+            var temperatureInput = document.getElementById("temperatureInput").value;
+            var fromUnit = document.getElementById("fromUnit").value;
+            var toUnit = document.getElementById("toUnit").value;
+            var resultElement = document.getElementById("result");
+
+            if (temperatureInput === "") {
+                resultElement.innerHTML = "Please enter a temperature value.";
+                return;
+            }
+
+            var temperature = parseFloat(temperatureInput);
+            var convertedTemperature;
+
+            if (fromUnit === "celsius") {
+                if (toUnit === "fahrenheit") {
+                    convertedTemperature = (temperature * 9 / 5) + 32;
+                } else if (toUnit === "kelvin") {
+                    convertedTemperature = temperature + 273.15;
+                } else {
+                    convertedTemperature = temperature;
+                }
+            } else if (fromUnit === "fahrenheit") {
+                if (toUnit === "celsius") {
+                    convertedTemperature = (temperature - 32) * 5 / 9;
+                } else if (toUnit === "kelvin") {
+                    convertedTemperature = (temperature - 32) * 5 / 9 + 273.15;
+                } else {
+                    convertedTemperature = temperature;
+                }
+            } else if (fromUnit === "kelvin") {
+                if (toUnit === "celsius") {
+                    convertedTemperature = temperature - 273.15;
+                } else if (toUnit === "fahrenheit") {
+                    convertedTemperature = (temperature - 273.15) * 9 / 5 + 32;
+                } else {
+                    convertedTemperature = temperature;
+                }
+            }
+
+            resultElement.innerHTML = temperature + " " + fromUnit + " is equal to " + convertedTemperature.toFixed(2) + " " + toUnit + ".";
+        }
+    </script>
+</body>
+</html>
